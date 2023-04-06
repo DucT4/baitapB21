@@ -15,6 +15,22 @@ document.querySelector('#btnThemNV').onclick = function (event) {
     console.log('sinhVien', sv);
     arrSinhVien.push(sv);
 
+    var valid = true;
+    //Trước khi đưa giá trị vào mảng và render ra giao diện thì kiểm tra dữ liệu có hợp lệ hay không (validation)
+    valid = kiemTraRong(sv.taiKhoan, 'tknv') & kiemTraRong(sv.hoTen, 'name') & kiemTraRong(sv.email, 'email') & kiemTraRong(sv.matKhau, 'password') & kiemTraRong(sv.luongCoBan, 'luongCB') & kiemTraRong(sv.soGioLam, 'gioLam') & kiemTraSo(sv.taiKhoan, 'tknv') & kiemTraDoDai(sv.taiKhoan, 'tknv', 4, 6) & kiemTraKyTu(sv.hoTen, 'name')&kiemTraSo(sv.soGioLam, 'gioLam') & kiemTraSo(sv.luongCoBan, 'luongCB') & kiemTraDoDai(sv.luongCoBan, 'luongCB',10000000,20000000) & kiemTraEmail(sv.email, 'email') & kiemTraDoDai(sv.soGioLam,80,200) & kiemTraPass(sv.matKhau) ;
+
+
+    if (!valid) {
+        // alert(messError);
+        return;
+    }
+
+
+
+
+
+
+
 
     var slChucVu = document.querySelector('#chucvu');
     //.selectedIndex: lấy ra vị trí của option được chọn
@@ -104,17 +120,17 @@ document.querySelector('#btnCapNhat').onclick = function () {
     console.log('sinhviendit', svEdit);
 
     for (var index = 0; index < arrSinhVien.length; index++) {
-       if(arrSinhVien[index].taiKhoan===svEdit.taiKhoan){
-        var svMang = arrSinhVien[index];
-        svMang.taiKhoan = svEdit.taiKhoan;
-        svMang.hoTen = svEdit.hoTen;
-        svMang.email = svEdit.email;
-        svMang.matKhau = svEdit.matKhau;
-        svMang.ngayLam = svEdit.ngayLam;
-        svMang.luongCoBan = svEdit.luongCoBan;
-        svMang.heSoLuong = svEdit.heSoLuong;
-        break;
-       }
+        if (arrSinhVien[index].taiKhoan === svEdit.taiKhoan) {
+            var svMang = arrSinhVien[index];
+            svMang.taiKhoan = svEdit.taiKhoan;
+            svMang.hoTen = svEdit.hoTen;
+            svMang.email = svEdit.email;
+            svMang.matKhau = svEdit.matKhau;
+            svMang.ngayLam = svEdit.ngayLam;
+            svMang.luongCoBan = svEdit.luongCoBan;
+            svMang.heSoLuong = svEdit.heSoLuong;
+            break;
+        }
     }
     saveStorage();
     renderSinhVien(arrSinhVien);
@@ -166,16 +182,15 @@ document.querySelector('#searchName').oninput = function () {
     var tuKhoa = document.querySelector('#searchName').value.trim();
 
     tuKhoa = stringToSlug(tuKhoa); //Nguyễn Văn A => nguyen-van-a
-    console.log('Từ khoá',tuKhoa);
+    console.log('Từ khoá', tuKhoa);
     var arrNhanVienTuKhoa = [];
     for (var index = 0; index < arrSinhVien.length; index++) {
         //Mỗi lần duyệt lấy ra 1 sinh viên
         var nv = arrSinhVien[index];
 
-        if(stringToSlug(nv.chucVu.trim()).search(tuKhoa) !== -1){
+        if (stringToSlug(nv.chucVu.trim()).search(tuKhoa) !== -1) {
             //Tìm ra tenSinhVien nào chứa từ khoá thì đưa object sinh vien đó vào mảng tìm kiếm
-            arrNhanVienTuKhoa.push(nv);
         }
+        renderSinhVien(arrNhanVienTuKhoa);
     }
-    renderSinhVien(arrNhanVienTuKhoa);
 }

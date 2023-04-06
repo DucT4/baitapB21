@@ -27,3 +27,58 @@ function stringToSlug(title) {
 
     return slug;
 }
+//validation
+function kiemTraRong(value, name) {
+    if (value.trim() === '') {
+        document.querySelector(`#error-required-${name}`).innerHTML = ``;
+        return false;
+    }
+
+    document.querySelector(`#error-required-${name}`).innerHTML = '';
+    return true;
+}
+function kiemTraSo (value,name) {
+    var regexNumber = /^[0-9]+$/;
+    if(regexNumber.test(value)){
+        document.querySelector(`#error-regex-${name}`).innerHTML = 'Vui long nhap so';
+        return true;
+    }
+    return false;
+}
+function kiemTraDoDai(value,name,minLength,maxLength) {
+    if(value.trim().length < minLength || value.trim().length>maxLength) {
+        document.querySelector(`#error-length-${name}`).innerHTML = `Vui lòng từ ${minLength} - ${maxLength} ký tự !`;
+        return false;
+    }
+    document.querySelector(`#error-length-${name}`).innerHTML = ``;
+    return true;
+}
+function kiemTraKyTu (value,name) {
+    var regexLetter = /^[A-Z a-záàạảãăặẵẳằắ]+$/;;
+    if(regexLetter.test(value)){
+        document.querySelector(`#error-regex-${name}`).innerHTML = '';
+        return true;
+    }
+    document.querySelector(`#error-regex-${name}`).innerHTML = `không hợp lệ !`;
+    return false;
+}
+function kiemTraEmail(value,name){
+    var regexEmail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if(regexEmail.test(value)){
+        document.querySelector(`#error-regex-${name}`).innerHTML = '';
+        return true;
+    }
+    document.querySelector(`#error-regex-${name}`).innerHTML = `${name} không hợp lệ !`;
+    return false;
+
+}function kiemTraPass(value,name){
+    var regexEmail = /^[A-Za-z]\w{7,14}$/;
+    if(regexEmail.test(value)){
+        document.querySelector(`#error-regex-${name}`).innerHTML = '';
+        return true;
+    }
+    document.querySelector(`#error-regex-${name}`).innerHTML = `${name} không hợp lệ !`;
+    return false;
+
+}
+
